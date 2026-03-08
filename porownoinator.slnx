@@ -1,0 +1,8 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/ApiInator/ApiInator.csproj" />
+  </Folder>
+  <Folder Name="/src/Gateway.Frontend/">
+    <Project Path="src/Gateway.Frontend/Frontend.Gateway.csproj" />
+  </Folder>
+</Solution>
