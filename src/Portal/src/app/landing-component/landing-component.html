@@ -1,0 +1,71 @@
+<div
+  class="min-h-screen bg-dark-bg flex flex-col items-center justify-center p-6 font-display overflow-hidden relative"
+>
+  <div class="absolute inset-0 bg-grid-pattern opacity-40 pointer-events-none animate-grid"></div>
+
+  <div
+    class="absolute top-10 left-10 w-32 h-32 border-l border-t border-white/15 pointer-events-none"
+  ></div>
+  <div
+    class="absolute bottom-10 right-10 w-32 h-32 border-r border-b border-white/15 pointer-events-none"
+  ></div>
+
+  <div
+    class="text-center z-10 transition-all duration-500 ease-in-out"
+    [class.-translate-y-32]="searchQuery()"
+  >
+    <h1 class="text-7xl md:text-9xl font-black text-white tracking-tighter mb-4 uppercase">
+      isIt<span class="text-brand-green">Worth</span>It<span class="animate-pulse">_</span>
+    </h1>
+
+    <p
+      class="text-slate-400 text-sm md:text-base max-w-lg mx-auto mb-12 font-mono leading-relaxed uppercase tracking-tighter"
+    >
+      Don't waste money on
+      <span class="text-white border-b border-brand-green">4h games for $70</span>.<br />
+      Let the <span class="text-brand-green font-bold">Fun-Per-Buck</span> index decide.
+    </p>
+
+    <div class="relative w-full max-w-2xl mx-auto">
+      <div class="absolute -top-4 -left-4 w-4 h-4 border-l-2 border-t-2 border-brand-green"></div>
+      <div
+        class="absolute -bottom-4 -right-4 w-4 h-4 border-r-2 border-b-2 border-brand-green"
+      ></div>
+
+      <input
+        [formControl]="searchControl"
+        type="text"
+        placeholder="ENTER GAME TITLE..."
+        class="relative w-full px-10 py-6 bg-white/5 border border-white/10 rounded-none text-2xl text-white placeholder-white/20 focus:outline-none focus:bg-white/10 transition-all font-mono uppercase tracking-tighter"
+      />
+
+      @if (filteredResults().length > 0) {
+        <div
+          class="absolute w-full mt-6 border-l-4 border-brand-green shadow-[0_0_30px_rgba(0,0,0,0.5)] z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+        >
+          @for (game of filteredResults(); track game.id) {
+            <div
+              class="relative group/item bg-brand-green/10 flex items-center justify-between px-8 py-5 hover:bg-brand-green cursor-pointer transition-all border-b border-white/5 last:border-none"
+            >
+              <div class="flex flex-col items-start">
+                <span
+                  class="text-xl font-black uppercase italic tracking-tight text-white group-hover/item:text-black transition-colors"
+                >
+                  {{ game.title }}
+                </span>
+              </div>
+
+              <div class="flex items-center gap-8">
+                <span
+                  class="text-2xl font-black font-mono text-white group-hover/item:text-black transition-colors"
+                >
+                  {{ game.price }} <span class="text-xs opacity-60">PLN</span>
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

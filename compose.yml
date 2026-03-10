@@ -50,6 +50,18 @@ services:
     networks:
       - Worthinator-net
 
+  wyglad-inator:
+    build:
+      context: ./src/Portal
+      dockerfile: Dockerfile
+    container_name: wyglad-inator
+    ports:
+      - "4200:80"
+    depends_on:
+      - api-inator
+    networks:
+      - Worthinator-net
+
 networks:
   Worthinator-net:
     driver: bridge
