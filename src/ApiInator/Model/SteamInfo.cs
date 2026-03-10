@@ -6,5 +6,5 @@ public class SteamInfo
     public string SteamAppId { get; set; }
     public string Name { get; set; }
     public Price InitialPrice { get; set; }
-    
+    public string TinyImageUrl { get; set; }
 }
