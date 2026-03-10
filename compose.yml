@@ -48,6 +48,7 @@ services:
       - Kestrel__Endpoints__Https__Url=https://*:443
       - Kestrel__Certificates__Default__Password=P@ssw0rd
       - Kestrel__Certificates__Default__Path=/certs/gateway.pfx
+      - ReverseProxy__Routes__api-route__Transforms__0__PathRemovePrefix=/api
       - ReverseProxy__Clusters__api-cluster__Destinations__destination1__Address=http://api-inator:13001
       - ReverseProxy__Clusters__portal-cluster__Destinations__destination1__Address=http://portal:80
     volumes:
