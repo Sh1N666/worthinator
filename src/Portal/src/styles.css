@@ -1,3 +1,33 @@
-/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss';
 
-@import "tailwindcss";
+@theme {
+  --color-brand-green: #22c55e;
+  --color-dark-bg: #06080a;
+}
+
+@keyframes grid-drift {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 48px 48px;
+  }
+}
+.animate-grid {
+  animation: grid-drift 2s linear infinite;
+}
+
+.bg-scanlines {
+  background: linear-gradient(to bottom, transparent 50%, rgba(0, 0, 0, 0.5) 51%, transparent 51%);
+  background-size: 100% 4px;
+}
+
+.hud-border {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+  @apply border-l-2 border-t-2 border-brand-green/30;
+}
+
+.bg-grid-pattern {
+  background-image: radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.3) 1px, transparent 0);
+  background-size: 48px 48px;
+}
