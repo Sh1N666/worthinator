@@ -16,8 +16,8 @@
     <ItemGroup>
       <PackageReference Include="CSnakes.Runtime" Version="2.0.0-beta.324" />
       <PackageReference Include="Google.Protobuf" Version="3.34.0" />
+      <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
       <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
-      <PackageReference Include="Grpc.Core" Version="2.46.6" />
       <PackageReference Include="Grpc.Tools" Version="2.78.0">
         <PrivateAssets>all</PrivateAssets>
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -29,6 +29,8 @@
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
+      <PackageReference Include="SlimMessageBus.Host" Version="3.3.6" />
+      <PackageReference Include="SlimMessageBus.Host.Memory" Version="3.3.6" />
     </ItemGroup>
 
     <ItemGroup>

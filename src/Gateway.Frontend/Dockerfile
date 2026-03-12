@@ -1,5 +1,4 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-# Usuwamy stąd USER $APP_UID, żeby nie psuło nam uprawnień w finalnym obrazie
 WORKDIR /app
 EXPOSE 80
 EXPOSE 443

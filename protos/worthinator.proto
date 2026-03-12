@@ -6,6 +6,10 @@ message SearchGameRequest{
   string search_phrase = 1;
 }
 message SearchGameResponse{
+  repeated GamePreview games = 1;
+}
+
+message GamePreview{
   string steamapp_id = 1;
   string name = 2;
   string tiny_image = 3;

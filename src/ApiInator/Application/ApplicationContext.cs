@@ -1,7 +1,7 @@
 using ApiInator.Model;
 using Microsoft.EntityFrameworkCore;
 
-namespace ApiInator.Infrastructure;
+namespace ApiInator.Application;
 
 public class ApplicationContext  : DbContext
 {
