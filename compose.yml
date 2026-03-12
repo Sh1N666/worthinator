@@ -30,6 +30,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=database;Database=WorthinatorDb;User Id=sa;Password=P@ssw0rd;TrustServerCertificate=True
+      - Kestrel__Endpoints__Http__Url=http://*:13001
+      - Kestrel__Endpoints__Http__Protocols=Http2
     depends_on:
       database:
         condition: service_healthy
@@ -50,6 +52,8 @@ services:
       - Kestrel__Certificates__Default__Path=/certs/gateway.pfx
       - ReverseProxy__Clusters__api-cluster__Destinations__destination1__Address=http://api-inator:13001
       - ReverseProxy__Clusters__portal-cluster__Destinations__destination1__Address=http://portal:80
+      - ReverseProxy__Clusters__api-cluster__HttpRequest__Version=2
+      - ReverseProxy__Clusters__api-cluster__HttpRequest__VersionPolicy=RequestVersionExact
     volumes:
       - ./certs:/certs:ro,Z
     depends_on:
