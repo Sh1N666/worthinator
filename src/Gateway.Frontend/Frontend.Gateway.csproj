@@ -9,6 +9,7 @@
 
     <ItemGroup>
         <PackageReference Include="Yarp.ReverseProxy" Version="2.3.*" />
+        <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
     </ItemGroup>
 
     <ItemGroup>

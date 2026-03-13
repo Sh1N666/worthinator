@@ -22,6 +22,7 @@ builder.Services.AddSteamApi();
 
 var app = builder.Build();
 
+app.UseGrpcWeb(new GrpcWebOptions { DefaultEnabled = true });
 app.MapGet("/status", ([FromServices]SteamApi steamApi) => "I'm Alive");
 
 app.MapGrpcService<ApiInatorController>();

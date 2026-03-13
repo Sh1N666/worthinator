@@ -1,0 +1,77 @@
+<div
+  class="absolute w-full mt-6 border-l-4 border-brand-green shadow-[0_0_30px_rgba(0,0,0,0.5)] z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+>
+  @if (isLoading()) {
+    @for (i of [1, 2, 3, 4, 5]; track i) {
+      <div
+        class="bg-brand-green/5 flex items-center justify-between gap-6 px-8 h-28.5 border-b border-white/5 animate-pulse"
+      >
+        <div class="flex flex-col gap-3 flex-1">
+          <div class="h-6 w-2/3 bg-white/10 rounded"></div>
+          <div class="h-3 w-1/4 bg-white/5 rounded"></div>
+        </div>
+        <div class="w-46 h-17.25 bg-white/10 border border-white/5 shrink-0"></div>
+      </div>
+    }
+  }
+
+  @for (game of games(); track game.steamappId) {
+    <div
+      (click)="gameSelected.emit(game)"
+      class="relative group/item bg-brand-green/10 flex items-center justify-between px-8 h-28.5 cursor-pointer border-b border-white/5 last:border-none overflow-hidden transition-all duration-300 hover:bg-brand-green/20"
+    >
+      <div
+        class="absolute inset-0 pointer-events-none z-20 shine-effect bg-linear-to-r from-transparent via-white/30 to-transparent group-hover/item:animate-[shine_0.25s_linear_forwards]"
+      ></div>
+
+      <div
+        class="flex flex-col items-start justify-start z-10 transition-transform duration-300 group-hover/item:translate-x-2 min-w-0 flex-1 pr-4"
+      >
+        @if (game.name.length > 30) {
+          <div
+            class="w-full overflow-hidden mask-[linear-gradient(to_right,black_90%,transparent_100%)]"
+          >
+            <div class="flex w-max group-hover/item:animate-marquee">
+              <span
+                class="text-xl font-black uppercase italic tracking-tight text-white group-hover/item:text-amber-300 transition-colors shrink-0 pr-12"
+              >
+                {{ game.name }}
+              </span>
+              <span
+                aria-hidden="true"
+                class="text-xl font-black uppercase italic tracking-tight text-white group-hover/item:text-amber-300 transition-colors shrink-0 pr-12"
+              >
+                {{ game.name }}
+              </span>
+            </div>
+          </div>
+        } @else {
+          <span
+            class="text-xl font-black uppercase italic tracking-tight text-white group-hover/item:text-amber-300 transition-colors truncate w-full text-left"
+          >
+            {{ game.name }}
+          </span>
+        }
+
+        <span
+          class="text-[10px] font-mono text-white/40 uppercase tracking-widest group-hover/item:text-white/70 transition-colors mt-1"
+        >
+          ID: {{ game.steamappId }}
+        </span>
+      </div>
+
+      <div class="flex items-center gap-8 z-10 shrink-0">
+        <div class="relative overflow-hidden border border-white/10 shadow-lg">
+          <img
+            [ngSrc]="game.tinyImage"
+            width="184"
+            height="69"
+            priority
+            [alt]="game.name"
+            class="object-cover border border-white/10"
+          />
+        </div>
+      </div>
+    </div>
+  }
+</div>

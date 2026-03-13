@@ -31,6 +31,7 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="10.0.3" />
       <PackageReference Include="SlimMessageBus.Host" Version="3.3.6" />
       <PackageReference Include="SlimMessageBus.Host.Memory" Version="3.3.6" />
+      <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
     </ItemGroup>
 
     <ItemGroup>
