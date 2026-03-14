@@ -19,9 +19,6 @@ public class SteamItem
     [JsonPropertyName("name")]
     public string Name { get; set; } = string.Empty;
 
-    [JsonPropertyName("metascore")]
-    public string Metascore { get; set; } = string.Empty;
-
     [JsonPropertyName("tiny_image")]
     public string TinyImage { get; set; } = string.Empty;
 
