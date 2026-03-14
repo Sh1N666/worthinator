@@ -1,17 +1,17 @@
-using System.Net.Http.Json; // Kluczowe do GetFromJsonAsync
+using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Microsoft.Extensions.Logging;
 
 namespace ApiInator.Application.SteamApi;
 
-public class SteamResponse
+public class SteamSearchResponse
 {
     [JsonPropertyName("items")]
-    public List<SteamItem> Items { get; set; } = new();
+    public List<SteamSearchItem> Items { get; set; } = new();
 }
 
-public class SteamItem
+public class SteamSearchItem
 {
     [JsonPropertyName("id")]
     public int SteamAppID { get; set; }
@@ -22,30 +22,42 @@ public class SteamItem
     [JsonPropertyName("tiny_image")]
     public string TinyImage { get; set; } = string.Empty;
 
-    [JsonPropertyName("price")]
-    public PriceDetails? Price { get; set; }
-
-    [JsonIgnore]
-    public int InitialPrice => Price?.InitialPrice ?? 0;
-
-    [JsonIgnore]
-    public string Currency => Price?.Currency ?? "PLN";
 }
 
-public class PriceDetails
+public class SteamDetailsItem
 {
-    [JsonPropertyName("initial")]
-    public int InitialPrice { get; set; }
+    [JsonPropertyName("name")]
+    public string Name { get; set; } = string.Empty;
 
-    [JsonPropertyName("currency")]
-    public string Currency { get; set; } = string.Empty;
+    [JsonPropertyName("short_description")]
+    public string ShortDescription { get; set; } = string.Empty;
+
+    [JsonPropertyName("genres")]
+    public List<Genre> Genres { get; set; } = new();
+
+    [JsonPropertyName("platforms")]
+    public Platforms Platforms { get; set; }
+
+    [JsonPropertyName("price_overview")]
+    public DetailsPrice? Price { get; set; }
+
+    [JsonPropertyName("developers")]
+    public List<string> Developers { get; set; } = new();
+
+    [JsonPropertyName("release_date")] 
+    public ReleaseDate ReleaseDate { get; set; }
 }
+
+public record Genre(string description);
+public record Platforms(bool windows, bool mac, bool linux);
+public record DetailsPrice(int initial, int final);
+public record ReleaseDate(string date);
 
 public class SteamApi
 {
     private readonly ILogger<SteamApi> _logger;
     private readonly HttpClient _steamClient;
-    private const string BASE_URL = "https://store.steampowered.com/api/";
+    private const string BASE_URL = "https://store.steampowered.com/api";
 
     public SteamApi(ILogger<SteamApi> logger)
     {
@@ -53,14 +65,41 @@ public class SteamApi
         _steamClient = new HttpClient();
     }
 
-    public async Task<IReadOnlyList<SteamItem>> SearchByNameAsync(string name)
+    public async Task<SteamDetailsItem?> GetGameDetailsAsync(string steamId)
     {
         try
         {
-            var url = $"{BASE_URL}storesearch/?term={Uri.EscapeDataString(name)}&l=english&cc=PL";
-            var steamData = await _steamClient.GetFromJsonAsync<SteamResponse>(url);
+            var url = $"{BASE_URL}/appdetails?appids={steamId}&cc=PL&l=polish";
+            var response = await _steamClient.GetFromJsonAsync<Dictionary<string, JsonElement>>(url);
+
+            if (response != null && response.TryGetValue(steamId, out var root))
+            {
+                if (root.GetProperty("success").GetBoolean())
+                {
+                    return JsonSerializer.Deserialize<SteamDetailsItem>(root.GetProperty("data").GetRawText());
+                }
+            }
+        }
+        catch (HttpRequestException ex)
+        {
+            _logger.LogError(ex, "Communication error for: {Id}", steamId);
+        }
+        catch (JsonException ex)
+        {
+            _logger.LogError(ex, "Deserialization error for: {Id}", steamId);
+        }
+
+        return null;
+    }
+
+    public async Task<IReadOnlyList<SteamSearchItem>> SearchPreviewByNameAsync(string name)
+    {
+        try
+        {
+            var url = $"{BASE_URL}/storesearch/?term={Uri.EscapeDataString(name)}&l=polish&cc=PL";
+            var steamData = await _steamClient.GetFromJsonAsync<SteamSearchResponse>(url);
             
-            return steamData?.Items ?? (IReadOnlyList<SteamItem>)Array.Empty<SteamItem>();
+            return steamData?.Items ?? new List<SteamSearchItem>();
         }
         catch (HttpRequestException ex)
         {
@@ -71,6 +110,6 @@ public class SteamApi
             _logger.LogError(ex, "Deserialization error for: {Name}", name);
         }
 
-        return Array.Empty<SteamItem>();
+        return new List<SteamSearchItem>();
     }
 }

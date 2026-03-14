@@ -22,7 +22,7 @@ namespace ApiInator.Application
             var name = request.Name;
             try
             {
-                var games = await steamApi.SearchByNameAsync(name);
+                var games = await steamApi.SearchPreviewByNameAsync(name);
                 var response = new SearchGameResponse();
                 response.Games.AddRange(games.Select(g => new GamePreview()
                         { Name = g.Name, SteamappId = g.SteamAppID.ToString(), TinyImage = g.TinyImage }));
