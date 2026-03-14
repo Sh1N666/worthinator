@@ -33,11 +33,12 @@
       <PackageReference Include="SlimMessageBus.Host.Memory" Version="3.3.6" />
       <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Infrastructure\" />
-    </ItemGroup>
     <ItemGroup>
         <Protobuf Include="..\..\protos\worthinator.proto" GrpcServices="Server" />
+    </ItemGroup>
+    <ItemGroup>
+        <AdditionalFiles Include="Infrastructure\hltb_scrapper.py">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </AdditionalFiles>
     </ItemGroup>
 </Project>

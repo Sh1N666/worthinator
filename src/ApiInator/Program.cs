@@ -1,4 +1,5 @@
 using ApiInator.Application;
+using ApiInator.Application.HowLongToBeatApi;
 using ApiInator.Application.SteamApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,7 @@ builder.Services.AddSlimMessageBus(mbb =>
 });
 builder.Services.AddGrpc();
 builder.Services.AddSteamApi();
+builder.Services.AddHLTBApi();
 
 var app = builder.Build();
 
