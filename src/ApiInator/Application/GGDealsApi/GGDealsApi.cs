@@ -29,16 +29,16 @@ public class GgDealsGameData
 public class GgDealsPrices
 {
     [JsonPropertyName("currentRetail")]
-    public string CurrentRetail { get; set; } = string.Empty;
+    public double CurrentRetail { get; set; }
 
     [JsonPropertyName("currentKeyshops")]
-    public string CurrentKeyshops { get; set; } = string.Empty;
+    public double CurrentKeyshops { get; set; }
 
     [JsonPropertyName("historicalRetail")]
-    public string HistoricalRetail { get; set; } = string.Empty;
+    public double HistoricalRetail { get; set; }
 
     [JsonPropertyName("historicalKeyshops")]
-    public string HistoricalKeyshops { get; set; } = string.Empty;
+    public double HistoricalKeyshops { get; set; }
 
     [JsonPropertyName("currency")]
     public string Currency { get; set; } = string.Empty;

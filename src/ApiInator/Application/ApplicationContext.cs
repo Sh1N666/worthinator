@@ -29,7 +29,8 @@ public class ApplicationContext
                 cm.AutoMap();
                 cm.MapIdProperty(g => g.Id)
                     .SetIdGenerator(StringObjectIdGenerator.Instance)
-                    .SetSerializer(new StringSerializer(BsonType.ObjectId));
+                    .SetSerializer(new StringSerializer(BsonType.ObjectId))
+                    .SetIgnoreIfDefault(true);
             });
         }
     }

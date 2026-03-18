@@ -12,7 +12,6 @@ public class GameData
     public int SteamAppId { get; set; }
     public string Name { get; set; }
     public string ShortDescription { get; set; }
-    public string TinyImage { get; set; }
     public string ReleaseDate { get; set; }
     
     public List<string> Developers { get; set; } = new();

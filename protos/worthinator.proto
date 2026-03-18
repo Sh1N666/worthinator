@@ -54,8 +54,8 @@ message MetacriticData {
 }
 
 message SteamPriceData {
-  int32 initial = 1;
-  int32 final = 2;
+  double initial = 1;
+  double final = 2;
 }
 
 message HltbData {
@@ -72,9 +72,9 @@ message GgDealsData {
 }
 
 message GgDealsPricesData {
-  string current_retail = 1;
-  string current_keyshops = 2;
-  string historical_retail = 3;
-  string historical_keyshops = 4;
+  double current_retail = 1;
+  double current_keyshops = 2;
+  double historical_retail = 3;
+  double historical_keyshops = 4;
   string currency = 5;
 }

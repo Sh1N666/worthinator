@@ -78,8 +78,8 @@ namespace ApiInator.Application
                     SteamAppId = appId,
                     Name = steamDetails.Name,
                     ShortDescription = steamDetails.ShortDescription,
-                    ReleaseDate = steamDetails.ReleaseDate?.date,
-                    Developers = steamDetails.Developers ?? new(),
+                    ReleaseDate = steamDetails.ReleaseDate.date,
+                    Developers = steamDetails.Developers,
                     Genres = steamDetails.Genres?.Select(g => g.description).ToList() ?? new(),
                     
                     Platforms = steamDetails.Platforms != null ? new GamePlatforms
@@ -148,11 +148,12 @@ namespace ApiInator.Application
         {
             var response = new GetGameInfoResponse
             {
-                Id = game.Id ?? string.Empty,
+                Id = game.Id,
                 SteamAppId = game.SteamAppId,
-                Name = game.Name ?? string.Empty,
-                ShortDescription = game.ShortDescription ?? string.Empty,
-                ReleaseDate = game.ReleaseDate ?? string.Empty
+                Name = game.Name,
+                ShortDescription = game.ShortDescription,
+                ReleaseDate = game.ReleaseDate,
+                WorthFactor = WorthCalculator.CalculateWorthFactor(game)
             };
 
             if (game.Developers != null && response.Developers != null) response.Developers.AddRange(game.Developers);
@@ -173,7 +174,7 @@ namespace ApiInator.Application
                 response.Metacritic = new MetacriticData
                 {
                     Score = game.Metacritic.Score,
-                    Url = game.Metacritic.Url ?? string.Empty
+                    Url = game.Metacritic.Url
                 };
             }
 
@@ -209,10 +210,10 @@ namespace ApiInator.Application
                 {
                     response.GgDeals.Prices = new GgDealsPricesData
                     {
-                        CurrentRetail = game.GgDeals.Prices.CurrentRetail ?? string.Empty,
-                        CurrentKeyshops = game.GgDeals.Prices.CurrentKeyshops ?? string.Empty,
-                        HistoricalRetail = game.GgDeals.Prices.HistoricalRetail ?? string.Empty,
-                        HistoricalKeyshops = game.GgDeals.Prices.HistoricalKeyshops ?? string.Empty,
+                        CurrentRetail = game.GgDeals.Prices.CurrentRetail,
+                        CurrentKeyshops = game.GgDeals.Prices.CurrentKeyshops,
+                        HistoricalRetail = game.GgDeals.Prices.HistoricalRetail,
+                        HistoricalKeyshops = game.GgDeals.Prices.HistoricalKeyshops,
                         Currency = game.GgDeals.Prices.Currency ?? string.Empty
                     };
                 }
