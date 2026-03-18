@@ -1,6 +1,6 @@
 services:
   database:
-    image: mongo:latest
+    image: mongo:7.0
     container_name: Worthinator-db
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
@@ -12,12 +12,12 @@ services:
     networks:
       - Worthinator-net
     healthcheck:
-      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "--authenticationDatabase", "admin", "-u", "admin", "-p", "P@ssw0rd", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 15s
-
+      
   api-inator:
     build:
       context: .
@@ -27,7 +27,7 @@ services:
       - "13001:13001"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=mongodb://admin:P@ssw0rd@database:27017/WorthinatorDb?authSource=admin
+      - ConnectionStrings__DefaultConnection=mongodb://admin:P%40ssw0rd@database:27017/WorthinatorDb?authSource=admin
       - Kestrel__Endpoints__Http__Url=http://*:13001
       - Kestrel__Endpoints__Http__Protocols=Http2
     depends_on:

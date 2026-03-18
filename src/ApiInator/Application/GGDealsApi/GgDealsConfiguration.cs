@@ -4,6 +4,6 @@ public static class GgDealsConfiguration
 {
     public static void AddGgDealsApi(this IServiceCollection services)
     {
-        services.AddScoped<GgDealsApiClient>();
+        services.AddHttpClient<GgDealsApiClient>();
     }
 }

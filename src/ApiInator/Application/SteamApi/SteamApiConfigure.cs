@@ -4,6 +4,6 @@ public static class SteamApiConfigure
 {
     public static void AddSteamApi(this IServiceCollection services)
     {
-        services.AddScoped<SteamApi>();
+        services.AddHttpClient<SteamApi>();
     }
 }

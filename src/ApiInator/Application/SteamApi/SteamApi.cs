@@ -58,17 +58,10 @@ public record Platforms(bool windows, bool mac, bool linux);
 public record DetailsPrice(int initial, int final);
 public record ReleaseDate(string date);
 
-public class SteamApi
+public class SteamApi(ILogger<SteamApi> _logger, HttpClient _steamClient)
 {
-    private readonly ILogger<SteamApi> _logger;
-    private readonly HttpClient _steamClient;
-    private static readonly string BASE_URL = "https://store.steampowered.com/api";
 
-    public SteamApi(ILogger<SteamApi> logger)
-    {
-        _logger = logger;
-        _steamClient = new HttpClient();
-    }
+    private static readonly string BASE_URL = "https://store.steampowered.com/api";
 
     public async Task<SteamDetailsItem?> GetGameDetailsAsync(string steamId)
     {

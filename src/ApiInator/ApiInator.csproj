@@ -5,35 +5,39 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <DefaultItemExcludes>$(DefaultItemExcludes);Infrastructure\venv\**</DefaultItemExcludes>
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="CSnakes.Runtime" Version="2.0.0-beta.324" />
-      <PackageReference Include="Google.Protobuf" Version="3.34.0" />
-      <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
-      <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
-      <PackageReference Include="Grpc.Tools" Version="2.78.0">
-        <PrivateAssets>all</PrivateAssets>
-        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-      </PackageReference>
-      <PackageReference Include="MongoDB.Bson" Version="3.7.0" />
-      <PackageReference Include="MongoDB.Driver" Version="3.7.0" />
-      <PackageReference Include="SlimMessageBus.Host" Version="3.3.6" />
-      <PackageReference Include="SlimMessageBus.Host.Memory" Version="3.3.6" />
-      <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
+        <PackageReference Include="CSnakes.Runtime" Version="2.0.0-beta.324" />
+        <PackageReference Include="Google.Protobuf" Version="3.34.0" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.76.0" />
+        <PackageReference Include="Grpc.AspNetCore.Web" Version="2.76.0" />
+        <PackageReference Include="Grpc.Tools" Version="2.78.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="MongoDB.Bson" Version="3.7.0" />
+        <PackageReference Include="MongoDB.Driver" Version="3.7.0" />
+        <PackageReference Include="pythonnet" Version="3.1.0-rc.0" />
+        <PackageReference Include="SlimMessageBus.Host" Version="3.3.6" />
+        <PackageReference Include="SlimMessageBus.Host.Memory" Version="3.3.6" />
     </ItemGroup>
+
     <ItemGroup>
         <Protobuf Include="..\..\protos\worthinator.proto" GrpcServices="Server" />
     </ItemGroup>
+
     <ItemGroup>
-        <AdditionalFiles Include="Infrastructure\hltb_scrapper.py">
+        <Content Include="Infrastructure\hltb_scrapper.py" Link="hltb_scrapper.py">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </AdditionalFiles>
+        </Content>
     </ItemGroup>
+
 </Project>

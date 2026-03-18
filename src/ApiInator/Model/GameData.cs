@@ -19,9 +19,9 @@ public class GameData
     public List<string> Genres { get; set; } = new();
     
     public GamePlatforms Platforms { get; set; }
-    public MetacriticData Metacritic { get; set; }
+    public MetacriticData? Metacritic { get; set; }
     
-    public SteamPriceData SteamPrice { get; set; }
+    public SteamPriceData? SteamPrice { get; set; }
     public HltbData Hltb { get; set; }
-    public GgDealsData GgDeals { get; set; }
+    public GgDealsData? GgDeals { get; set; }
 }

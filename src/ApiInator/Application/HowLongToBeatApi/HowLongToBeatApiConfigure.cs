@@ -1,17 +1,20 @@
 using ApiInator.Infrastructure;
 using CSnakes.Runtime;
 
+
 namespace ApiInator.Application.HowLongToBeatApi;
 
 public static class HowLongToBeatApiConfigure
 {
     public static void AddHLTBApi(this IServiceCollection services)
     { 
-        string venvPath = Path.Combine(Directory.GetCurrentDirectory(), "ApiInator.Infrastructure", ".venv");
-        
+        string infraPath = Path.Combine(Directory.GetCurrentDirectory(), "Infrastructure");
+        string venvPath = Path.Combine(infraPath, "venv");
+
         services.WithPython()
+            .WithHome(infraPath)
             .WithVirtualEnvironment(venvPath)
-            .WithPipInstaller(); 
+            .FromRedistributable();
 
         services.AddSingleton<HltbPythonIntegrator>();
         services.AddScoped<HowLongToBeatApi>();
