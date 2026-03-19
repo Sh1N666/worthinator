@@ -44,24 +44,26 @@ public class GgDealsPrices
     public string Currency { get; set; } = string.Empty;
 }
 
-public class GgDealsApiClient
+public class GgDealsApiClient ()
 {
     private readonly ILogger<GgDealsApiClient> _logger;
     private readonly HttpClient _httpClient;
-    private static readonly string API_KEY = Environment.GetEnvironmentVariable("GGDEALS_API_KEY") ?? string.Empty;
+    private readonly string _apiKey;
     private static readonly string BASE_URL = "https://api.gg.deals/v1/prices";
 
-    public GgDealsApiClient(ILogger<GgDealsApiClient> logger, HttpClient httpClient)
+    public GgDealsApiClient(HttpClient httpClient, ILogger<GgDealsApiClient> logger, IConfiguration configuration) : this()
     {
-        _logger = logger;
         _httpClient = httpClient;
+        _logger = logger;
+        _apiKey = configuration["GGDEALS_API_KEY"] ?? string.Empty; 
     }
+    
 
     public async Task<GgDealsGameData?> GetGamePricesAsync(string steamId)
     {
         try
         {
-            var url = $"{BASE_URL}/by-steam-app-id/?ids={steamId}&key={API_KEY}&region=pl";
+            var url = $"{BASE_URL}/by-steam-app-id/?ids={steamId}&key={_apiKey}&region=pl";
             var response = await _httpClient.GetFromJsonAsync<GgDealsResponse>(url);
 
             if (response != null && response.Success && response.Data.TryGetValue(steamId, out var gameData))

@@ -23,4 +23,5 @@ public class GameData
     public SteamPriceData? SteamPrice { get; set; }
     public HltbData Hltb { get; set; }
     public GgDealsData? GgDeals { get; set; }
+    public DateTimeOffset LastUpdated { get; set; }
 }

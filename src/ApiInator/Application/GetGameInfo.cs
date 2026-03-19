@@ -34,45 +34,61 @@ namespace ApiInator.Application
         {
             try
             {
-                logger.LogInformation("Rozpoczęto przetwarzanie żądania dla SteamAppId: {AppId}", request?.SteamAppId);
+                logger.LogInformation("Start searching for SteamAppId: {AppId}", request?.SteamAppId);
                 
                 if (request == null)
                 {
-                    logger.LogWarning("Och, Panie, przesłane żądanie jest puste (null). Przerywam działanie.");
+                    logger.LogWarning("Request is (null).");
                     return new GetGameInfoResponse();
                 }
 
                 var appId = request.SteamAppId;
 
-                logger.LogInformation("Szukam gry o SteamAppId {AppId} w Twojej wspaniałej bazie danych.", appId);
+                logger.LogInformation("Searching for {AppId} in cached data.", appId);
                 var cachedGame = await dbContext.Games
                     .Find(g => g.SteamAppId == appId)
                     .FirstOrDefaultAsync(cancellationToken);
 
                 if (cachedGame != null)
                 {
-                    logger.LogInformation("Gra o SteamAppId {AppId} znaleziona w bazie. Zwracam wynik bez niepotrzebnego fatygowania zewnętrznych API.", appId);
+                    logger.LogInformation("Game with SteamAppId {AppId} has been found", appId);
+                    if (cachedGame.LastUpdated - DateTimeOffset.Now > TimeSpan.FromHours(24))
+                    {
+                        var ggDealsPrices = await ggDealsApi.GetGamePricesAsync(appId.ToString());
+
+                        cachedGame.LastUpdated = DateTimeOffset.Now;
+                        cachedGame.GgDeals.Prices.CurrentKeyshops = ggDealsPrices.Prices.CurrentKeyshops;
+                        cachedGame.GgDeals.Prices.CurrentRetail = ggDealsPrices.Prices.CurrentRetail;
+                        cachedGame.GgDeals.Prices.HistoricalKeyshops = cachedGame.GgDeals.Prices.HistoricalKeyshops;
+                        cachedGame.GgDeals.Prices.HistoricalRetail = cachedGame.GgDeals.Prices.HistoricalRetail;
+                        var saveFilter = Builders<GameData>.Filter.Eq(g => g.SteamAppId, appId);
+                        var saveOptions = new FindOneAndReplaceOptions<GameData> 
+                        { 
+                            IsUpsert = true
+                        };
+                        await dbContext.Games.FindOneAndReplaceAsync(saveFilter, cachedGame, saveOptions, cancellationToken);
+                    }
                     return MapToResponse(cachedGame);
                 }
 
-                logger.LogInformation("Gry o SteamAppId {AppId} nie ma w bazie. Pytam Steam o detale...", appId);
+                logger.LogInformation("Game with SteamAppId {AppId} is absent in cached data.", appId);
                 var steamDetails = await steamApi.GetGameDetailsAsync(appId.ToString());
                 if (steamDetails == null)
                 {
-                    logger.LogWarning("Zuchwały Steam nie zwrócił żadnych detali dla SteamAppId {AppId}.", appId);
+                    logger.LogWarning("Steam don't steaming for {AppId}.", appId);
                     return new GetGameInfoResponse();
                 }
 
-                logger.LogInformation("Pobrano detale ze Steam dla gry {AppId} ({Name}). Odpytuję równolegle HLTB oraz GGDeals...", appId, steamDetails.Name);
-                var hltbTask = hltbApi.GetByNameAsync(steamDetails.Name);
                 var ggDealsTask = ggDealsApi.GetGamePricesAsync(appId.ToString());
-
-                await Task.WhenAll(hltbTask, ggDealsTask);
-                logger.LogInformation("Zakończono pobieranie danych z zewnętrznych usług dla gry {AppId}.", appId);
+                var ggDealsData = await ggDealsTask;
+                var cleanName = new string(ggDealsData.Title.Where(c => !char.IsSymbol(c)).ToArray());
+                
+                var hltbTask = hltbApi.GetByNameAsync(cleanName);
 
                 var hltbData = await hltbTask;
-                var ggDealsData = await ggDealsTask;
-
+                
+                await Task.WhenAll(hltbTask, ggDealsTask);
+                logger.LogInformation("Get details for {AppId} ({Name}) successfully.", appId, steamDetails.Name);
                 var newGameDocument = new GameData
                 {
                     SteamAppId = appId,
@@ -124,7 +140,7 @@ namespace ApiInator.Application
                     } : null
                 };
 
-                logger.LogInformation("Zapisuję zebrane dane dla gry {AppId} do bazy...", appId);
+                logger.LogInformation("Saving game  {AppId} into cached data", appId);
                 var filter = Builders<GameData>.Filter.Eq(g => g.SteamAppId, appId);
                 var options = new FindOneAndReplaceOptions<GameData> 
                 { 
@@ -133,13 +149,13 @@ namespace ApiInator.Application
                 };
                 
                 var savedGame = await dbContext.Games.FindOneAndReplaceAsync(filter, newGameDocument, options, cancellationToken);
-                logger.LogInformation("Dane dla gry {AppId} zostały pomyślnie utrwalone w Twojej domenie.", appId);
+                logger.LogInformation("Data for {AppId} saved successfully", appId);
 
                 return MapToResponse(savedGame ?? newGameDocument);
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, "Wystąpił potworny błąd podczas przetwarzania żądania dla SteamAppId: {AppId}", request?.SteamAppId);
+                logger.LogError(ex, "Error occured while attempting to save {AppId}", request?.SteamAppId);
                 return new GetGameInfoResponse();
             }
         }
@@ -203,7 +219,7 @@ namespace ApiInator.Application
             {
                 response.GgDeals = new GgDealsData
                 {
-                    Url = game.GgDeals.Url ?? string.Empty
+                    Url = game.GgDeals.Url
                 };
 
                 if (game.GgDeals.Prices != null)
@@ -214,7 +230,7 @@ namespace ApiInator.Application
                         CurrentKeyshops = game.GgDeals.Prices.CurrentKeyshops,
                         HistoricalRetail = game.GgDeals.Prices.HistoricalRetail,
                         HistoricalKeyshops = game.GgDeals.Prices.HistoricalKeyshops,
-                        Currency = game.GgDeals.Prices.Currency ?? string.Empty
+                        Currency = game.GgDeals.Prices.Currency
                     };
                 }
             }

@@ -1,28 +1,25 @@
-﻿FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-USER root
-RUN apt-get update && \
-    apt-get install -y python3 python3-pip && \
-    rm -rf /var/lib/apt/lists/*
-WORKDIR /app
-COPY Infrastructure/requirements.txt .
-RUN pip3 install --no-cache-dir --break-system-packages -r requirements.txt
-USER $APP_UID
-EXPOSE 13001
-
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG BUILD_CONFIGURATION=Release
+﻿FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
+
 COPY ["src/ApiInator/ApiInator.csproj", "src/ApiInator/"]
 RUN dotnet restore "src/ApiInator/ApiInator.csproj"
+
 COPY . .
+
 WORKDIR "/src/src/ApiInator"
-RUN dotnet build "./ApiInator.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet publish "ApiInator.csproj" -c Release -o /app/publish
 
-FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./ApiInator.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-
-FROM base AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS final
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+RUN apt-get update && \
+    apt-get install -y python3.12 python3.12-venv && \
+    rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /app/publish .
+COPY --from=build /src/src/ApiInator/Infrastructure ./Infrastructure
+
+RUN python3.12 -m venv /app/Infrastructure/venv && \
+    /app/Infrastructure/venv/bin/pip install -r /app/Infrastructure/requirements.txt
+
 ENTRYPOINT ["dotnet", "ApiInator.dll"]

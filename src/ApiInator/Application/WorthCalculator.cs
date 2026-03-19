@@ -25,7 +25,7 @@ public static class WorthCalculator
         double R = count > 0 ? totalR / count : 0;
 
         double pAkt = Math.Min(game.GgDeals.Prices.CurrentKeyshops, game.GgDeals.Prices.CurrentRetail); 
-        double pHist = Math.Min(game.GgDeals.Prices.HistoricalKeyshops, game.GgDeals.Prices.HistoricalRetail);
+        double pHist = Math.Max(Math.Min(game.GgDeals.Prices.HistoricalKeyshops, game.GgDeals.Prices.HistoricalRetail), 0.01);
         double pRegular = (game.SteamPrice.Initial) / 100.0;
 
         if (pAkt <= 0) pAkt = 0.01;

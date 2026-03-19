@@ -3,8 +3,8 @@ services:
     image: mongo:7.0
     container_name: Worthinator-db
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=P@ssw0rd
+      - MONGO_INITDB_ROOT_USERNAME=${DB_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DB_ROOT_PASS}
     ports:
       - "27017:27017"
     volumes:
@@ -12,24 +12,25 @@ services:
     networks:
       - Worthinator-net
     healthcheck:
-      test: ["CMD", "mongosh", "--authenticationDatabase", "admin", "-u", "admin", "-p", "P@ssw0rd", "--eval", "db.adminCommand('ping')"]
+      test: ["CMD", "mongosh", "--authenticationDatabase", "admin", "-u", "${DB_ROOT_USER}", "-p", "${DB_ROOT_PASS}", "--eval", "db.adminCommand('ping')"]
       interval: 10s
       timeout: 5s
       retries: 5
       start_period: 15s
-      
+  
   api-inator:
     build:
       context: .
       dockerfile: src/ApiInator/Dockerfile
     container_name: api-inator
     ports:
-      - "13001:13001"
+      - "${API_PORT}:${API_PORT}"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=mongodb://admin:P%40ssw0rd@database:27017/WorthinatorDb?authSource=admin
-      - Kestrel__Endpoints__Http__Url=http://*:13001
+      - ConnectionStrings__DefaultConnection=mongodb://${DB_ROOT_USER}:${DB_CONN_PASS_ENCODED}@database:27017/${DB_NAME}?authSource=admin
+      - Kestrel__Endpoints__Http__Url=http://*:${API_PORT}
       - Kestrel__Endpoints__Http__Protocols=Http2
+      - GGDEALS_API_KEY=${GGDEALS_API_KEY}
     depends_on:
       database:
         condition: service_healthy
@@ -42,15 +43,15 @@ services:
       dockerfile: src/Gateway.Frontend/Dockerfile
     container_name: gateway-frontend
     ports:
-      - "443:443"
+      - "${GW_PORT_HTTPS}:${GW_PORT_HTTPS}"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - Kestrel__Endpoints__Https__Url=https://*:443
-      - Kestrel__Certificates__Default__Password=P@ssw0rd
-      - Kestrel__Certificates__Default__Path=/certs/gateway.pfx
+      - Kestrel__Endpoints__Https__Url=https://*:${GW_PORT_HTTPS}
+      - Kestrel__Certificates__Default__Password=${CERT_PASS}
+      - Kestrel__Certificates__Default__Path=${CERT_PATH}
       - ReverseProxy__Routes__api-route__Transforms__0__PathRemovePrefix=/api
-      - ReverseProxy__Clusters__api-cluster__Destinations__destination1__Address=http://api-inator:13001
-      - ReverseProxy__Clusters__portal-cluster__Destinations__destination1__Address=http://portal:80
+      - ReverseProxy__Clusters__api-cluster__Destinations__destination1__Address=http://api-inator:${API_PORT}
+      - ReverseProxy__Clusters__portal-cluster__Destinations__destination1__Address=http://portal:${PORTAL_PORT_INTERNAL}
       - ReverseProxy__Clusters__api-cluster__HttpRequest__Version=2
       - ReverseProxy__Clusters__api-cluster__HttpRequest__VersionPolicy=RequestVersionExact
     volumes:
@@ -66,7 +67,7 @@ services:
       dockerfile: Dockerfile
     container_name: portal
     ports:
-      - "4200:80"
+      - "${PORTAL_PORT_EXTERNAL}:${PORTAL_PORT_INTERNAL}"
     depends_on:
       - api-inator
     networks:
