@@ -5,6 +5,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { WorthinatorService } from '../../services/worthinator-service';
 import { SearchSuggestions } from '../../components/search-suggestions/search-suggestions';
 import { GamePreview } from '../../generated/worthinator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-component',
@@ -14,6 +15,7 @@ import { GamePreview } from '../../generated/worthinator';
 })
 export class LandingComponent {
   private readonly worthinatorService = inject(WorthinatorService);
+  private router = inject(Router);
   searchControl = new FormControl('', { nonNullable: true });
   isLoading = signal(false);
 
@@ -43,10 +45,7 @@ export class LandingComponent {
   );
 
   onGameClick(game: GamePreview) {
-    console.log('Navigating to:', game.name);
     this.searchControl.setValue('');
-
-    //TODO
-    //this.router.navigate(['/game', game.steamapp_id]);
+    this.router.navigate(['/game', game.steamAppId]);
   }
 }

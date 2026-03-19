@@ -34,9 +34,9 @@ export interface SearchGameResponse {
  */
 export interface GamePreview {
   /**
-   * @generated from protobuf field: string steamapp_id = 1
+   * @generated from protobuf field: int32 steam_app_id = 1
    */
-  steamappId: string;
+  steamAppId: number;
   /**
    * @generated from protobuf field: string name = 2
    */
@@ -51,9 +51,9 @@ export interface GamePreview {
  */
 export interface GetGameInfoRequest {
   /**
-   * @generated from protobuf field: string steamapp_id = 1
+   * @generated from protobuf field: int32 steam_app_id = 1
    */
-  steamappId: string;
+  steamAppId: number;
 }
 /**
  * @generated from protobuf message worthinator.GetGameInfoResponse
@@ -64,67 +64,159 @@ export interface GetGameInfoResponse {
    */
   id: string;
   /**
-   * @generated from protobuf field: double worth_factor = 2
+   * @generated from protobuf field: int32 steam_app_id = 2
+   */
+  steamAppId: number;
+  /**
+   * @generated from protobuf field: string name = 3
+   */
+  name: string;
+  /**
+   * @generated from protobuf field: string short_description = 4
+   */
+  shortDescription: string;
+  /**
+   * @generated from protobuf field: string release_date = 5
+   */
+  releaseDate: string;
+  /**
+   * @generated from protobuf field: repeated string developers = 6
+   */
+  developers: string[];
+  /**
+   * @generated from protobuf field: repeated string genres = 7
+   */
+  genres: string[];
+  /**
+   * @generated from protobuf field: worthinator.Platforms platforms = 8
+   */
+  platforms?: Platforms;
+  /**
+   * @generated from protobuf field: worthinator.MetacriticData metacritic = 9
+   */
+  metacritic?: MetacriticData;
+  /**
+   * @generated from protobuf field: worthinator.SteamPriceData steam_price = 10
+   */
+  steamPrice?: SteamPriceData;
+  /**
+   * @generated from protobuf field: worthinator.HltbData hltb = 11
+   */
+  hltb?: HltbData;
+  /**
+   * @generated from protobuf field: worthinator.GgDealsData gg_deals = 12
+   */
+  ggDeals?: GgDealsData;
+  /**
+   * @generated from protobuf field: int32 worth_factor = 13
    */
   worthFactor: number;
-  /**
-   * @generated from protobuf field: worthinator.PriceInfo price_info = 3
-   */
-  priceInfo?: PriceInfo;
-  /**
-   * @generated from protobuf field: string tiny_image = 4
-   */
-  tinyImage: string;
-  /**
-   * @generated from protobuf field: double rating_score = 5
-   */
-  ratingScore: number;
-  /**
-   * @generated from protobuf field: int32 release_year = 6
-   */
-  releaseYear: number;
-  /**
-   * @generated from protobuf field: worthinator.HowLongToBeat how_long_to_beat = 7
-   */
-  howLongToBeat?: HowLongToBeat;
 }
 /**
- * @generated from protobuf message worthinator.HowLongToBeat
+ * @generated from protobuf message worthinator.Platforms
  */
-export interface HowLongToBeat {
+export interface Platforms {
   /**
-   * @generated from protobuf field: double main = 1
+   * @generated from protobuf field: bool windows = 1
    */
-  main: number;
+  windows: boolean;
   /**
-   * @generated from protobuf field: double main_extra = 2
+   * @generated from protobuf field: bool mac = 2
+   */
+  mac: boolean;
+  /**
+   * @generated from protobuf field: bool linux = 3
+   */
+  linux: boolean;
+}
+/**
+ * @generated from protobuf message worthinator.MetacriticData
+ */
+export interface MetacriticData {
+  /**
+   * @generated from protobuf field: int32 score = 1
+   */
+  score: number;
+  /**
+   * @generated from protobuf field: string url = 2
+   */
+  url: string;
+}
+/**
+ * @generated from protobuf message worthinator.SteamPriceData
+ */
+export interface SteamPriceData {
+  /**
+   * @generated from protobuf field: double initial = 1
+   */
+  initial: number;
+  /**
+   * @generated from protobuf field: double final = 2
+   */
+  final: number;
+}
+/**
+ * @generated from protobuf message worthinator.HltbData
+ */
+export interface HltbData {
+  /**
+   * @generated from protobuf field: int32 game_id = 1
+   */
+  gameId: number;
+  /**
+   * @generated from protobuf field: double main_story = 2
+   */
+  mainStory: number;
+  /**
+   * @generated from protobuf field: double main_extra = 3
    */
   mainExtra: number;
   /**
-   * @generated from protobuf field: double completionist = 3
+   * @generated from protobuf field: double completionist = 4
    */
   completionist: number;
+  /**
+   * @generated from protobuf field: double review_score = 5
+   */
+  reviewScore: number;
 }
 /**
- * @generated from protobuf message worthinator.PriceInfo
+ * @generated from protobuf message worthinator.GgDealsData
  */
-export interface PriceInfo {
+export interface GgDealsData {
   /**
-   * @generated from protobuf field: double actual_price = 1
+   * @generated from protobuf field: string url = 1
    */
-  actualPrice: number;
+  url: string;
   /**
-   * @generated from protobuf field: double historical_low_price = 2
+   * @generated from protobuf field: worthinator.GgDealsPricesData prices = 2
    */
-  historicalLowPrice: number;
+  prices?: GgDealsPricesData;
+}
+/**
+ * @generated from protobuf message worthinator.GgDealsPricesData
+ */
+export interface GgDealsPricesData {
   /**
-   * @generated from protobuf field: double initial_price = 3
+   * @generated from protobuf field: double current_retail = 1
    */
-  initialPrice: number;
+  currentRetail: number;
   /**
-   * @generated from protobuf field: string currency_code = 4
+   * @generated from protobuf field: double current_keyshops = 2
    */
-  currencyCode: string;
+  currentKeyshops: number;
+  /**
+   * @generated from protobuf field: double historical_retail = 3
+   */
+  historicalRetail: number;
+  /**
+   * @generated from protobuf field: double historical_keyshops = 4
+   */
+  historicalKeyshops: number;
+  /**
+   * @generated from protobuf field: string currency = 5
+   */
+  currency: string;
 }
 // @generated message type with reflection information, may provide speed optimized methods
 class SearchGameRequest$Type extends MessageType<SearchGameRequest> {
@@ -266,14 +358,14 @@ export const SearchGameResponse = new SearchGameResponse$Type();
 class GamePreview$Type extends MessageType<GamePreview> {
   constructor() {
     super('worthinator.GamePreview', [
-      { no: 1, name: 'steamapp_id', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 1, name: 'steam_app_id', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
       { no: 2, name: 'name', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
       { no: 3, name: 'tiny_image', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
     ]);
   }
   override create(value?: PartialMessage<GamePreview>): GamePreview {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.steamappId = '';
+    message.steamAppId = 0;
     message.name = '';
     message.tinyImage = '';
     if (value !== undefined) reflectionMergePartial<GamePreview>(this, message, value);
@@ -290,8 +382,8 @@ class GamePreview$Type extends MessageType<GamePreview> {
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* string steamapp_id */ 1:
-          message.steamappId = reader.string();
+        case /* int32 steam_app_id */ 1:
+          message.steamAppId = reader.int32();
           break;
         case /* string name */ 2:
           message.name = reader.string();
@@ -323,9 +415,8 @@ class GamePreview$Type extends MessageType<GamePreview> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* string steamapp_id = 1; */
-    if (message.steamappId !== '')
-      writer.tag(1, WireType.LengthDelimited).string(message.steamappId);
+    /* int32 steam_app_id = 1; */
+    if (message.steamAppId !== 0) writer.tag(1, WireType.Varint).int32(message.steamAppId);
     /* string name = 2; */
     if (message.name !== '') writer.tag(2, WireType.LengthDelimited).string(message.name);
     /* string tiny_image = 3; */
@@ -343,12 +434,12 @@ export const GamePreview = new GamePreview$Type();
 class GetGameInfoRequest$Type extends MessageType<GetGameInfoRequest> {
   constructor() {
     super('worthinator.GetGameInfoRequest', [
-      { no: 1, name: 'steamapp_id', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 1, name: 'steam_app_id', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
     ]);
   }
   override create(value?: PartialMessage<GetGameInfoRequest>): GetGameInfoRequest {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.steamappId = '';
+    message.steamAppId = 0;
     if (value !== undefined) reflectionMergePartial<GetGameInfoRequest>(this, message, value);
     return message;
   }
@@ -363,8 +454,8 @@ class GetGameInfoRequest$Type extends MessageType<GetGameInfoRequest> {
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* string steamapp_id */ 1:
-          message.steamappId = reader.string();
+        case /* int32 steam_app_id */ 1:
+          message.steamAppId = reader.int32();
           break;
         default:
           let u = options.readUnknownField;
@@ -390,9 +481,8 @@ class GetGameInfoRequest$Type extends MessageType<GetGameInfoRequest> {
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* string steamapp_id = 1; */
-    if (message.steamappId !== '')
-      writer.tag(1, WireType.LengthDelimited).string(message.steamappId);
+    /* int32 steam_app_id = 1; */
+    if (message.steamAppId !== 0) writer.tag(1, WireType.Varint).int32(message.steamAppId);
     let u = options.writeUnknownFields;
     if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
     return writer;
@@ -407,21 +497,42 @@ class GetGameInfoResponse$Type extends MessageType<GetGameInfoResponse> {
   constructor() {
     super('worthinator.GetGameInfoResponse', [
       { no: 1, name: 'id', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
-      { no: 2, name: 'worth_factor', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 3, name: 'price_info', kind: 'message', T: () => PriceInfo },
-      { no: 4, name: 'tiny_image', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
-      { no: 5, name: 'rating_score', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 6, name: 'release_year', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
-      { no: 7, name: 'how_long_to_beat', kind: 'message', T: () => HowLongToBeat },
+      { no: 2, name: 'steam_app_id', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
+      { no: 3, name: 'name', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 4, name: 'short_description', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 5, name: 'release_date', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      {
+        no: 6,
+        name: 'developers',
+        kind: 'scalar',
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      {
+        no: 7,
+        name: 'genres',
+        kind: 'scalar',
+        repeat: 2 /*RepeatType.UNPACKED*/,
+        T: 9 /*ScalarType.STRING*/,
+      },
+      { no: 8, name: 'platforms', kind: 'message', T: () => Platforms },
+      { no: 9, name: 'metacritic', kind: 'message', T: () => MetacriticData },
+      { no: 10, name: 'steam_price', kind: 'message', T: () => SteamPriceData },
+      { no: 11, name: 'hltb', kind: 'message', T: () => HltbData },
+      { no: 12, name: 'gg_deals', kind: 'message', T: () => GgDealsData },
+      { no: 13, name: 'worth_factor', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
     ]);
   }
   override create(value?: PartialMessage<GetGameInfoResponse>): GetGameInfoResponse {
     const message = globalThis.Object.create(this.messagePrototype!);
     message.id = '';
+    message.steamAppId = 0;
+    message.name = '';
+    message.shortDescription = '';
+    message.releaseDate = '';
+    message.developers = [];
+    message.genres = [];
     message.worthFactor = 0;
-    message.tinyImage = '';
-    message.ratingScore = 0;
-    message.releaseYear = 0;
     if (value !== undefined) reflectionMergePartial<GetGameInfoResponse>(this, message, value);
     return message;
   }
@@ -439,33 +550,66 @@ class GetGameInfoResponse$Type extends MessageType<GetGameInfoResponse> {
         case /* string id */ 1:
           message.id = reader.string();
           break;
-        case /* double worth_factor */ 2:
-          message.worthFactor = reader.double();
+        case /* int32 steam_app_id */ 2:
+          message.steamAppId = reader.int32();
           break;
-        case /* worthinator.PriceInfo price_info */ 3:
-          message.priceInfo = PriceInfo.internalBinaryRead(
+        case /* string name */ 3:
+          message.name = reader.string();
+          break;
+        case /* string short_description */ 4:
+          message.shortDescription = reader.string();
+          break;
+        case /* string release_date */ 5:
+          message.releaseDate = reader.string();
+          break;
+        case /* repeated string developers */ 6:
+          message.developers.push(reader.string());
+          break;
+        case /* repeated string genres */ 7:
+          message.genres.push(reader.string());
+          break;
+        case /* worthinator.Platforms platforms */ 8:
+          message.platforms = Platforms.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
-            message.priceInfo,
+            message.platforms,
           );
           break;
-        case /* string tiny_image */ 4:
-          message.tinyImage = reader.string();
-          break;
-        case /* double rating_score */ 5:
-          message.ratingScore = reader.double();
-          break;
-        case /* int32 release_year */ 6:
-          message.releaseYear = reader.int32();
-          break;
-        case /* worthinator.HowLongToBeat how_long_to_beat */ 7:
-          message.howLongToBeat = HowLongToBeat.internalBinaryRead(
+        case /* worthinator.MetacriticData metacritic */ 9:
+          message.metacritic = MetacriticData.internalBinaryRead(
             reader,
             reader.uint32(),
             options,
-            message.howLongToBeat,
+            message.metacritic,
           );
+          break;
+        case /* worthinator.SteamPriceData steam_price */ 10:
+          message.steamPrice = SteamPriceData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.steamPrice,
+          );
+          break;
+        case /* worthinator.HltbData hltb */ 11:
+          message.hltb = HltbData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.hltb,
+          );
+          break;
+        case /* worthinator.GgDealsData gg_deals */ 12:
+          message.ggDeals = GgDealsData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.ggDeals,
+          );
+          break;
+        case /* int32 worth_factor */ 13:
+          message.worthFactor = reader.int32();
           break;
         default:
           let u = options.readUnknownField;
@@ -493,28 +637,59 @@ class GetGameInfoResponse$Type extends MessageType<GetGameInfoResponse> {
   ): IBinaryWriter {
     /* string id = 1; */
     if (message.id !== '') writer.tag(1, WireType.LengthDelimited).string(message.id);
-    /* double worth_factor = 2; */
-    if (message.worthFactor !== 0) writer.tag(2, WireType.Bit64).double(message.worthFactor);
-    /* worthinator.PriceInfo price_info = 3; */
-    if (message.priceInfo)
-      PriceInfo.internalBinaryWrite(
-        message.priceInfo,
-        writer.tag(3, WireType.LengthDelimited).fork(),
+    /* int32 steam_app_id = 2; */
+    if (message.steamAppId !== 0) writer.tag(2, WireType.Varint).int32(message.steamAppId);
+    /* string name = 3; */
+    if (message.name !== '') writer.tag(3, WireType.LengthDelimited).string(message.name);
+    /* string short_description = 4; */
+    if (message.shortDescription !== '')
+      writer.tag(4, WireType.LengthDelimited).string(message.shortDescription);
+    /* string release_date = 5; */
+    if (message.releaseDate !== '')
+      writer.tag(5, WireType.LengthDelimited).string(message.releaseDate);
+    /* repeated string developers = 6; */
+    for (let i = 0; i < message.developers.length; i++)
+      writer.tag(6, WireType.LengthDelimited).string(message.developers[i]);
+    /* repeated string genres = 7; */
+    for (let i = 0; i < message.genres.length; i++)
+      writer.tag(7, WireType.LengthDelimited).string(message.genres[i]);
+    /* worthinator.Platforms platforms = 8; */
+    if (message.platforms)
+      Platforms.internalBinaryWrite(
+        message.platforms,
+        writer.tag(8, WireType.LengthDelimited).fork(),
         options,
       ).join();
-    /* string tiny_image = 4; */
-    if (message.tinyImage !== '') writer.tag(4, WireType.LengthDelimited).string(message.tinyImage);
-    /* double rating_score = 5; */
-    if (message.ratingScore !== 0) writer.tag(5, WireType.Bit64).double(message.ratingScore);
-    /* int32 release_year = 6; */
-    if (message.releaseYear !== 0) writer.tag(6, WireType.Varint).int32(message.releaseYear);
-    /* worthinator.HowLongToBeat how_long_to_beat = 7; */
-    if (message.howLongToBeat)
-      HowLongToBeat.internalBinaryWrite(
-        message.howLongToBeat,
-        writer.tag(7, WireType.LengthDelimited).fork(),
+    /* worthinator.MetacriticData metacritic = 9; */
+    if (message.metacritic)
+      MetacriticData.internalBinaryWrite(
+        message.metacritic,
+        writer.tag(9, WireType.LengthDelimited).fork(),
         options,
       ).join();
+    /* worthinator.SteamPriceData steam_price = 10; */
+    if (message.steamPrice)
+      SteamPriceData.internalBinaryWrite(
+        message.steamPrice,
+        writer.tag(10, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* worthinator.HltbData hltb = 11; */
+    if (message.hltb)
+      HltbData.internalBinaryWrite(
+        message.hltb,
+        writer.tag(11, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* worthinator.GgDealsData gg_deals = 12; */
+    if (message.ggDeals)
+      GgDealsData.internalBinaryWrite(
+        message.ggDeals,
+        writer.tag(12, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
+    /* int32 worth_factor = 13; */
+    if (message.worthFactor !== 0) writer.tag(13, WireType.Varint).int32(message.worthFactor);
     let u = options.writeUnknownFields;
     if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
     return writer;
@@ -525,41 +700,265 @@ class GetGameInfoResponse$Type extends MessageType<GetGameInfoResponse> {
  */
 export const GetGameInfoResponse = new GetGameInfoResponse$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class HowLongToBeat$Type extends MessageType<HowLongToBeat> {
+class Platforms$Type extends MessageType<Platforms> {
   constructor() {
-    super('worthinator.HowLongToBeat', [
-      { no: 1, name: 'main', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 2, name: 'main_extra', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 3, name: 'completionist', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+    super('worthinator.Platforms', [
+      { no: 1, name: 'windows', kind: 'scalar', T: 8 /*ScalarType.BOOL*/ },
+      { no: 2, name: 'mac', kind: 'scalar', T: 8 /*ScalarType.BOOL*/ },
+      { no: 3, name: 'linux', kind: 'scalar', T: 8 /*ScalarType.BOOL*/ },
     ]);
   }
-  override create(value?: PartialMessage<HowLongToBeat>): HowLongToBeat {
+  override create(value?: PartialMessage<Platforms>): Platforms {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.main = 0;
+    message.windows = false;
+    message.mac = false;
+    message.linux = false;
+    if (value !== undefined) reflectionMergePartial<Platforms>(this, message, value);
+    return message;
+  }
+  override internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: Platforms,
+  ): Platforms {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* bool windows */ 1:
+          message.windows = reader.bool();
+          break;
+        case /* bool mac */ 2:
+          message.mac = reader.bool();
+          break;
+        case /* bool linux */ 3:
+          message.linux = reader.bool();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === 'throw')
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  override internalBinaryWrite(
+    message: Platforms,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* bool windows = 1; */
+    if (message.windows !== false) writer.tag(1, WireType.Varint).bool(message.windows);
+    /* bool mac = 2; */
+    if (message.mac !== false) writer.tag(2, WireType.Varint).bool(message.mac);
+    /* bool linux = 3; */
+    if (message.linux !== false) writer.tag(3, WireType.Varint).bool(message.linux);
+    let u = options.writeUnknownFields;
+    if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message worthinator.Platforms
+ */
+export const Platforms = new Platforms$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class MetacriticData$Type extends MessageType<MetacriticData> {
+  constructor() {
+    super('worthinator.MetacriticData', [
+      { no: 1, name: 'score', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
+      { no: 2, name: 'url', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  override create(value?: PartialMessage<MetacriticData>): MetacriticData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.score = 0;
+    message.url = '';
+    if (value !== undefined) reflectionMergePartial<MetacriticData>(this, message, value);
+    return message;
+  }
+  override internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: MetacriticData,
+  ): MetacriticData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* int32 score */ 1:
+          message.score = reader.int32();
+          break;
+        case /* string url */ 2:
+          message.url = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === 'throw')
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  override internalBinaryWrite(
+    message: MetacriticData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* int32 score = 1; */
+    if (message.score !== 0) writer.tag(1, WireType.Varint).int32(message.score);
+    /* string url = 2; */
+    if (message.url !== '') writer.tag(2, WireType.LengthDelimited).string(message.url);
+    let u = options.writeUnknownFields;
+    if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message worthinator.MetacriticData
+ */
+export const MetacriticData = new MetacriticData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class SteamPriceData$Type extends MessageType<SteamPriceData> {
+  constructor() {
+    super('worthinator.SteamPriceData', [
+      { no: 1, name: 'initial', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 2, name: 'final', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+    ]);
+  }
+  override create(value?: PartialMessage<SteamPriceData>): SteamPriceData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.initial = 0;
+    message.final = 0;
+    if (value !== undefined) reflectionMergePartial<SteamPriceData>(this, message, value);
+    return message;
+  }
+  override internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: SteamPriceData,
+  ): SteamPriceData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* double initial */ 1:
+          message.initial = reader.double();
+          break;
+        case /* double final */ 2:
+          message.final = reader.double();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === 'throw')
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  override internalBinaryWrite(
+    message: SteamPriceData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* double initial = 1; */
+    if (message.initial !== 0) writer.tag(1, WireType.Bit64).double(message.initial);
+    /* double final = 2; */
+    if (message.final !== 0) writer.tag(2, WireType.Bit64).double(message.final);
+    let u = options.writeUnknownFields;
+    if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message worthinator.SteamPriceData
+ */
+export const SteamPriceData = new SteamPriceData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class HltbData$Type extends MessageType<HltbData> {
+  constructor() {
+    super('worthinator.HltbData', [
+      { no: 1, name: 'game_id', kind: 'scalar', T: 5 /*ScalarType.INT32*/ },
+      { no: 2, name: 'main_story', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 3, name: 'main_extra', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 4, name: 'completionist', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 5, name: 'review_score', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+    ]);
+  }
+  override create(value?: PartialMessage<HltbData>): HltbData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.gameId = 0;
+    message.mainStory = 0;
     message.mainExtra = 0;
     message.completionist = 0;
-    if (value !== undefined) reflectionMergePartial<HowLongToBeat>(this, message, value);
+    message.reviewScore = 0;
+    if (value !== undefined) reflectionMergePartial<HltbData>(this, message, value);
     return message;
   }
   override internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: HowLongToBeat,
-  ): HowLongToBeat {
+    target?: HltbData,
+  ): HltbData {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* double main */ 1:
-          message.main = reader.double();
+        case /* int32 game_id */ 1:
+          message.gameId = reader.int32();
           break;
-        case /* double main_extra */ 2:
+        case /* double main_story */ 2:
+          message.mainStory = reader.double();
+          break;
+        case /* double main_extra */ 3:
           message.mainExtra = reader.double();
           break;
-        case /* double completionist */ 3:
+        case /* double completionist */ 4:
           message.completionist = reader.double();
+          break;
+        case /* double review_score */ 5:
+          message.reviewScore = reader.double();
           break;
         default:
           let u = options.readUnknownField;
@@ -581,66 +980,64 @@ class HowLongToBeat$Type extends MessageType<HowLongToBeat> {
     return message;
   }
   override internalBinaryWrite(
-    message: HowLongToBeat,
+    message: HltbData,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* double main = 1; */
-    if (message.main !== 0) writer.tag(1, WireType.Bit64).double(message.main);
-    /* double main_extra = 2; */
-    if (message.mainExtra !== 0) writer.tag(2, WireType.Bit64).double(message.mainExtra);
-    /* double completionist = 3; */
-    if (message.completionist !== 0) writer.tag(3, WireType.Bit64).double(message.completionist);
+    /* int32 game_id = 1; */
+    if (message.gameId !== 0) writer.tag(1, WireType.Varint).int32(message.gameId);
+    /* double main_story = 2; */
+    if (message.mainStory !== 0) writer.tag(2, WireType.Bit64).double(message.mainStory);
+    /* double main_extra = 3; */
+    if (message.mainExtra !== 0) writer.tag(3, WireType.Bit64).double(message.mainExtra);
+    /* double completionist = 4; */
+    if (message.completionist !== 0) writer.tag(4, WireType.Bit64).double(message.completionist);
+    /* double review_score = 5; */
+    if (message.reviewScore !== 0) writer.tag(5, WireType.Bit64).double(message.reviewScore);
     let u = options.writeUnknownFields;
     if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
     return writer;
   }
 }
 /**
- * @generated MessageType for protobuf message worthinator.HowLongToBeat
+ * @generated MessageType for protobuf message worthinator.HltbData
  */
-export const HowLongToBeat = new HowLongToBeat$Type();
+export const HltbData = new HltbData$Type();
 // @generated message type with reflection information, may provide speed optimized methods
-class PriceInfo$Type extends MessageType<PriceInfo> {
+class GgDealsData$Type extends MessageType<GgDealsData> {
   constructor() {
-    super('worthinator.PriceInfo', [
-      { no: 1, name: 'actual_price', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 2, name: 'historical_low_price', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 3, name: 'initial_price', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
-      { no: 4, name: 'currency_code', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+    super('worthinator.GgDealsData', [
+      { no: 1, name: 'url', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+      { no: 2, name: 'prices', kind: 'message', T: () => GgDealsPricesData },
     ]);
   }
-  override create(value?: PartialMessage<PriceInfo>): PriceInfo {
+  override create(value?: PartialMessage<GgDealsData>): GgDealsData {
     const message = globalThis.Object.create(this.messagePrototype!);
-    message.actualPrice = 0;
-    message.historicalLowPrice = 0;
-    message.initialPrice = 0;
-    message.currencyCode = '';
-    if (value !== undefined) reflectionMergePartial<PriceInfo>(this, message, value);
+    message.url = '';
+    if (value !== undefined) reflectionMergePartial<GgDealsData>(this, message, value);
     return message;
   }
   override internalBinaryRead(
     reader: IBinaryReader,
     length: number,
     options: BinaryReadOptions,
-    target?: PriceInfo,
-  ): PriceInfo {
+    target?: GgDealsData,
+  ): GgDealsData {
     let message = target ?? this.create(),
       end = reader.pos + length;
     while (reader.pos < end) {
       let [fieldNo, wireType] = reader.tag();
       switch (fieldNo) {
-        case /* double actual_price */ 1:
-          message.actualPrice = reader.double();
+        case /* string url */ 1:
+          message.url = reader.string();
           break;
-        case /* double historical_low_price */ 2:
-          message.historicalLowPrice = reader.double();
-          break;
-        case /* double initial_price */ 3:
-          message.initialPrice = reader.double();
-          break;
-        case /* string currency_code */ 4:
-          message.currencyCode = reader.string();
+        case /* worthinator.GgDealsPricesData prices */ 2:
+          message.prices = GgDealsPricesData.internalBinaryRead(
+            reader,
+            reader.uint32(),
+            options,
+            message.prices,
+          );
           break;
         default:
           let u = options.readUnknownField;
@@ -662,29 +1059,121 @@ class PriceInfo$Type extends MessageType<PriceInfo> {
     return message;
   }
   override internalBinaryWrite(
-    message: PriceInfo,
+    message: GgDealsData,
     writer: IBinaryWriter,
     options: BinaryWriteOptions,
   ): IBinaryWriter {
-    /* double actual_price = 1; */
-    if (message.actualPrice !== 0) writer.tag(1, WireType.Bit64).double(message.actualPrice);
-    /* double historical_low_price = 2; */
-    if (message.historicalLowPrice !== 0)
-      writer.tag(2, WireType.Bit64).double(message.historicalLowPrice);
-    /* double initial_price = 3; */
-    if (message.initialPrice !== 0) writer.tag(3, WireType.Bit64).double(message.initialPrice);
-    /* string currency_code = 4; */
-    if (message.currencyCode !== '')
-      writer.tag(4, WireType.LengthDelimited).string(message.currencyCode);
+    /* string url = 1; */
+    if (message.url !== '') writer.tag(1, WireType.LengthDelimited).string(message.url);
+    /* worthinator.GgDealsPricesData prices = 2; */
+    if (message.prices)
+      GgDealsPricesData.internalBinaryWrite(
+        message.prices,
+        writer.tag(2, WireType.LengthDelimited).fork(),
+        options,
+      ).join();
     let u = options.writeUnknownFields;
     if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
     return writer;
   }
 }
 /**
- * @generated MessageType for protobuf message worthinator.PriceInfo
+ * @generated MessageType for protobuf message worthinator.GgDealsData
  */
-export const PriceInfo = new PriceInfo$Type();
+export const GgDealsData = new GgDealsData$Type();
+// @generated message type with reflection information, may provide speed optimized methods
+class GgDealsPricesData$Type extends MessageType<GgDealsPricesData> {
+  constructor() {
+    super('worthinator.GgDealsPricesData', [
+      { no: 1, name: 'current_retail', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 2, name: 'current_keyshops', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 3, name: 'historical_retail', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 4, name: 'historical_keyshops', kind: 'scalar', T: 1 /*ScalarType.DOUBLE*/ },
+      { no: 5, name: 'currency', kind: 'scalar', T: 9 /*ScalarType.STRING*/ },
+    ]);
+  }
+  override create(value?: PartialMessage<GgDealsPricesData>): GgDealsPricesData {
+    const message = globalThis.Object.create(this.messagePrototype!);
+    message.currentRetail = 0;
+    message.currentKeyshops = 0;
+    message.historicalRetail = 0;
+    message.historicalKeyshops = 0;
+    message.currency = '';
+    if (value !== undefined) reflectionMergePartial<GgDealsPricesData>(this, message, value);
+    return message;
+  }
+  override internalBinaryRead(
+    reader: IBinaryReader,
+    length: number,
+    options: BinaryReadOptions,
+    target?: GgDealsPricesData,
+  ): GgDealsPricesData {
+    let message = target ?? this.create(),
+      end = reader.pos + length;
+    while (reader.pos < end) {
+      let [fieldNo, wireType] = reader.tag();
+      switch (fieldNo) {
+        case /* double current_retail */ 1:
+          message.currentRetail = reader.double();
+          break;
+        case /* double current_keyshops */ 2:
+          message.currentKeyshops = reader.double();
+          break;
+        case /* double historical_retail */ 3:
+          message.historicalRetail = reader.double();
+          break;
+        case /* double historical_keyshops */ 4:
+          message.historicalKeyshops = reader.double();
+          break;
+        case /* string currency */ 5:
+          message.currency = reader.string();
+          break;
+        default:
+          let u = options.readUnknownField;
+          if (u === 'throw')
+            throw new globalThis.Error(
+              `Unknown field ${fieldNo} (wire type ${wireType}) for ${this.typeName}`,
+            );
+          let d = reader.skip(wireType);
+          if (u !== false)
+            (u === true ? UnknownFieldHandler.onRead : u)(
+              this.typeName,
+              message,
+              fieldNo,
+              wireType,
+              d,
+            );
+      }
+    }
+    return message;
+  }
+  override internalBinaryWrite(
+    message: GgDealsPricesData,
+    writer: IBinaryWriter,
+    options: BinaryWriteOptions,
+  ): IBinaryWriter {
+    /* double current_retail = 1; */
+    if (message.currentRetail !== 0) writer.tag(1, WireType.Bit64).double(message.currentRetail);
+    /* double current_keyshops = 2; */
+    if (message.currentKeyshops !== 0)
+      writer.tag(2, WireType.Bit64).double(message.currentKeyshops);
+    /* double historical_retail = 3; */
+    if (message.historicalRetail !== 0)
+      writer.tag(3, WireType.Bit64).double(message.historicalRetail);
+    /* double historical_keyshops = 4; */
+    if (message.historicalKeyshops !== 0)
+      writer.tag(4, WireType.Bit64).double(message.historicalKeyshops);
+    /* string currency = 5; */
+    if (message.currency !== '') writer.tag(5, WireType.LengthDelimited).string(message.currency);
+    let u = options.writeUnknownFields;
+    if (u !== false) (u == true ? UnknownFieldHandler.onWrite : u)(this.typeName, message, writer);
+    return writer;
+  }
+}
+/**
+ * @generated MessageType for protobuf message worthinator.GgDealsPricesData
+ */
+export const GgDealsPricesData = new GgDealsPricesData$Type();
 /**
  * @generated ServiceType for protobuf service worthinator.WorthinatorService
  */

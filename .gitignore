@@ -24,3 +24,6 @@ yarn-error.log*
 # === [ OS / System ] ===
 .DS_Store
 Thumbs.db
+
+# === [ Python ] ===
+venv/
