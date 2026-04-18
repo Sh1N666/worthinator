@@ -1,5 +1,5 @@
 <div
-  class="absolute w-full mt-6 border-l-4 border-brand-green shadow-[0_0_30px_rgba(0,0,0,0.5)] z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+  class="absolute w-full mt-6 max-h-[45vh] overflow-y-auto overscroll-contain border-l-4 border-brand-green shadow-[0_0_30px_rgba(0,0,0,0.5)] z-50 animate-in fade-in slide-in-from-top-2 duration-200 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-black/20 [&::-webkit-scrollbar-track]:border-l [&::-webkit-scrollbar-track]:border-white/5 [&::-webkit-scrollbar-thumb]:bg-brand-green/40 [&::-webkit-scrollbar-thumb]:border-l [&::-webkit-scrollbar-thumb]:border-white/10 hover:[&::-webkit-scrollbar-thumb]:bg-brand-green"
 >
   @if (isLoading()) {
     @for (i of [1, 2, 3, 4, 5]; track i) {
