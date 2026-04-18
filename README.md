@@ -68,10 +68,17 @@ Uruchomienie systemu poza kontenerami wymaga natywnej instalacji środowisk uruc
 **1. Usługa Bazy Danych:**
 Uruchom lokalną instancję MongoDB na domyślnym porcie `27017`. Skonfiguruj identyczne poświadczenia dla bazy, co zadeklarowane w lokalnych zmiennych środowiskowych aplikacji.
 
-**2. Warstwa Backendowa (.NET):**
-* Otwórz plik solucji `worthinator.slnx` w kompatybilnym środowisku IDE.
-* Przed uruchomieniem wyeksportuj wymagane zmienne środowiskowe do sesji terminala lub dodaj je do konfiguracji profilu startowego (pliki `launchSettings.json`).
-* Uruchom równolegle projekty `ApiInator.csproj` oraz `Frontend.Gateway.csproj`.
+**2. Warstwa Backendowa (.NET)**
+
+1. Otwórz plik solucji `worthinator.slnx` w kompatybilnym środowisku IDE.
+2. Przed uruchomieniem wyeksportuj wymagane zmienne środowiskowe do sesji terminala lub dodaj je do konfiguracji profilu startowego (pliki `launchSettings.json`).
+3. **Konfiguracja środowiska Python:**
+   Przed startem projektów musisz przygotować interpreter:
+   * Przejdź do katalogu: `src/ApiInator/Infrastructure`
+   * Utwórz wirtualne środowisko: `python3.12 -m venv venv`
+   * Aktywuj środowisko: `source venv/bin/activate`
+   * Zainstaluj zależności: `pip install -r requirements.txt`
+4. Uruchom równolegle projekty `ApiInator.csproj` oraz `Frontend.Gateway.csproj`.
 
 **3. Warstwa Kliencka (Angular):**
 * Przejdź do podkatalogu zawierającego projekt frontendowy: `cd src/Portal`.
